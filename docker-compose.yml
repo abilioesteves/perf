@@ -3,7 +3,7 @@ version: '3.5'
 
 services:
   perf:
-    image: abilioesteves/perf:0.0.4
+    image: abilioesteves/perf:0.0.9
     build: .
     ports:
       - "17333:17333/tcp"
@@ -13,3 +13,28 @@ services:
         delay: 5s
         max_attempts: 2
         window: 5s
+
+  prometheus:
+    build: .
+    image: abilioesteves/prometheus
+    volumes: 
+      - promdata:/prometheus
+    ports:
+      - 9090:9090
+    environment:
+      - SCRAPE_INTERVAL=15s
+      - SCRAPE_TIMEOUT=10s
+      - STATIC_SCRAPE_TARGETS=diskperf@perf:17333/diskperf/prom
+      - DNS_SCRAPE_TARGETS=
+      - SCHEME_SCRAPE_TARGETS=http
+      - REMOTE_WRITE=
+      - REMOTE_READ=
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 2
+        window: 5s
+    
+volumes:
+  promdata:
