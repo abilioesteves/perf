@@ -5,9 +5,9 @@ type Checker interface {
 	DiskPerf() (DiskPerfInfo, error)
 }
 
-// DiskPerfInfo defines the information in bytes/s of a disk performance check
+// DiskPerfInfo defines the information in of a disk performance check
 type DiskPerfInfo struct {
-	Read string
+	WriteSpeed string
 
-	Write string
+	Unit string
 }
