@@ -3,10 +3,12 @@ version: '3.5'
 
 services:
   perf:
-    image: abilioesteves/perf:0.0.9
     build: .
+    image: abilioesteves/perf:0.1.13
     ports:
       - "17333:17333/tcp"
+    environment:
+      - WRITE_PATH=/
     deploy:
       restart_policy:
         condition: on-failure
@@ -15,7 +17,6 @@ services:
         window: 5s
 
   prometheus:
-    build: .
     image: abilioesteves/prometheus
     volumes: 
       - promdata:/prometheus

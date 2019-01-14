@@ -32,13 +32,12 @@ func NewDefaultHook(perfChecker perf.Checker) *DefaultHook {
 
 // Init initializes the webhook
 func (hook *DefaultHook) Init() {
-	logrus.Info("Initializing the default webhook...")
+	logrus.Info("Default webhook listening for incoming connections")
 	err := http.ListenAndServe("0.0.0.0:17333", hook.router)
 	if err != nil {
 		logrus.Errorf("Error initializing the default webhook: %v", err)
 		os.Exit(1)
 	}
-	logrus.Info("Default webhook initialized!")
 }
 
 // DiskPerf Gets the read and write performance of the disk

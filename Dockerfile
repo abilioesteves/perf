@@ -17,8 +17,14 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -ldflags '-extldflag
 # PKG
 FROM ubuntu:latest
 
+ENV WRITE_PATH ""
+
 COPY --from=builder /perf /
+
+ADD startup.sh /
 
 EXPOSE 17333
 
-CMD ["./perf"]
+USER root
+
+CMD ["/startup.sh"]
